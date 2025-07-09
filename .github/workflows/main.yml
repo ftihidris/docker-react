@@ -12,3 +12,17 @@ jobs:
       - run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
       - run: docker build -t fatihidris/docker-react -f Dockerfile.dev .
       - run: docker run -e CI=true fatihidris/docker-react npm test
+
+      - name: Generate to deployment package
+        run: zip -r deploy.zip . -x '*.git*'
+      
+      - name: Deploy to Elastic Beanstalk
+        uses: einaregilsson/beanstalk-deploy@v21
+        with:
+          application_name: frontend
+          environment_name: Frontend-env
+          version_label: ${{ github.sha }}
+          region: ap-southeast-2-266097584661
+          existing_bucket_name: elasticbeanstalk-ap-southeast-2-
+          deployment_package: deploy.zip
+

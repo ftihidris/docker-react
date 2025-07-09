@@ -24,5 +24,8 @@ jobs:
           version_label: ${{ github.sha }}
           region: ap-southeast-2-266097584661
           existing_bucket_name: elasticbeanstalk-ap-southeast-2-
-          deployment_package: deploy.zip
+          deployment_package: deploy.zip          
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS }}
+          
 
